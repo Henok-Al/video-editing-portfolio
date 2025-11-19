@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Video Editing Portfolio with Admin Dashboard
 
-## Getting Started
+A modern video editing portfolio website with a protected admin panel for managing projects.
 
-First, run the development server:
+## Features
+
+- **Public Portfolio**: Showcase video editing projects with a modern UI
+- **Admin Dashboard**: Protected admin panel for managing projects
+- **Project Management**: Add, edit, delete, and reorder projects
+- **YouTube Integration**: Auto-extract YouTube IDs and fetch thumbnails
+- **Supabase Backend**: Database storage with authentication
+- **Responsive Design**: Works on all device sizes
+- **Animations**: Smooth animations with Framer Motion
+
+## Tech Stack
+
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Supabase (Database & Authentication)
+- Framer Motion (Animations)
+- Server Actions (Admin operations)
+
+## Setup Instructions
+
+### 1. Environment Variables
+
+Create a `.env.local` file in the root directory with:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+```
+
+### 2. Supabase Setup
+
+1. Create a new Supabase project
+2. Run the SQL schema from `supabase/schema.sql` in the Supabase SQL editor
+3. Set up authentication (email/password provider)
+4. Create a service role key in Supabase settings
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+### 4. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Database Schema
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The database schema is defined in `supabase/schema.sql`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `projects` table with fields for title, YouTube ID, thumbnail, description, etc.
+- Row Level Security (RLS) policies
+- Indexes for performance
 
-## Learn More
+## Admin Panel
 
-To learn more about Next.js, take a look at the following resources:
+Access the admin panel at `/admin`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Login with Supabase authentication
+- Add new projects with YouTube URL
+- Edit existing projects
+- Delete projects
+- Reorder projects
+- Toggle visibility (draft/published/unlisted)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+Deploy to Vercel:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push code to GitHub
+2. Connect Vercel to your repository
+3. Add environment variables in Vercel dashboard
+4. Deploy!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Folder Structure
+
+```
+app/
+  ├── actions/           # Server actions for admin operations
+  ├── admin/             # Admin dashboard pages
+  ├── api/               # API routes
+  ├── components/        # Reusable components
+  │   ├── admin/         # Admin-specific components
+  │   └── ...            # Other components
+  ├── lib/               # Utility functions and Supabase clients
+  ├── login/             # Login page
+  ├── types/             # TypeScript types
+  └── ...                # Other pages
+supabase/
+  └── schema.sql         # Database schema
+```
+
+## Key Components
+
+- **Hero**: Main landing page hero section
+- **ProjectCard**: Individual project display card
+- **ProjectModal**: Detailed project view modal
+- **BeforeAfterSlider**: Color grading comparison slider
+- **AdminForm**: Form for adding/editing projects
+- **ProjectList**: List of projects in admin panel
+
+## Animations
+
+All animations use Framer Motion:
+
+- Hero entrance text
+- Staggered grid reveal
+- Hover depth effect on cards
+- Modal open/close transitions
+- Smooth fade-ins

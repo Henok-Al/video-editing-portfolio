@@ -88,23 +88,39 @@ const ProjectsGallery = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <motion.h2 
+              className="text-3xl md:text-4xl font-bold text-white mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
               Featured Projects
-            </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            </motion.h2>
+            <motion.p 
+              className="text-gray-400 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               Loading projects...
-            </p>
+            </motion.p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((id) => (
-              <div key={id} className="bg-card-bg rounded-xl overflow-hidden shadow-xl h-80 animate-pulse border border-card-border">
+              <motion.div
+                key={id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: id * 0.1 }}
+                className="bg-card-bg rounded-xl overflow-hidden shadow-xl h-80 animate-pulse border border-card-border"
+              >
                 <div className="bg-gray-700 w-full aspect-video"></div>
                 <div className="p-6">
                   <div className="h-6 bg-gray-700 rounded mb-4"></div>
                   <div className="h-4 bg-gray-700 rounded mb-2"></div>
                   <div className="h-4 bg-gray-700 rounded w-3/4"></div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -131,20 +147,41 @@ const ProjectsGallery = () => {
         </motion.div>
 
         <AnimatePresence>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial="initial"
+            animate="animate"
+            variants={{
+              animate: {
+                transition: {
+                  staggerChildren: 0.1
+                }
+              }
+            }}
+          >
             {projects.map((project, index) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ 
-                  y: -10,
-                  scale: 1.02,
-                  transition: { duration: 0.2 }
+                variants={{
+                  initial: { opacity: 0, y: 30 },
+                  animate: { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: { 
+                      duration: 0.5,
+                      ease: "easeOut"
+                    }
+                  }
                 }}
-                className="bg-card-bg rounded-xl overflow-hidden shadow-xl cursor-pointer border border-card-border hover:border-primary transition-all duration-300"
+                whileHover={{ 
+                  y: -15,
+                  scale: 1.03,
+                  transition: { 
+                    duration: 0.3,
+                    ease: "easeInOut"
+                  }
+                }}
+                className="bg-card-bg rounded-xl overflow-hidden shadow-xl cursor-pointer border border-card-border hover:border-primary transition-all duration-300 group"
                 onClick={() => openModal(project)}
               >
                 <div className="relative">
@@ -153,7 +190,7 @@ const ProjectsGallery = () => {
                       <img 
                         src={project.thumbnail_url} 
                         alt={project.title} 
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => {
                           // Fallback to placeholder if image fails to load
                           const target = e.target as HTMLImageElement;
@@ -170,8 +207,9 @@ const ProjectsGallery = () => {
                     )}
                   </div>
                   <motion.div 
-                    className="absolute top-4 right-4 bg-primary text-white text-xs font-medium px-2 py-1 rounded-full"
+                    className="absolute top-4 right-4 bg-primary text-white text-xs font-medium px-2 py-1 rounded-full shadow-lg"
                     whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                   >
                     {project.format}
                   </motion.div>
@@ -179,8 +217,12 @@ const ProjectsGallery = () => {
                     {project.categories?.slice(0, 2).map((category, idx) => (
                       <motion.span 
                         key={idx} 
-                        className="bg-black/50 text-white text-xs px-2 py-1 rounded"
-                        whileHover={{ scale: 1.05 }}
+                        className="bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"
+                        whileHover={{ 
+                          scale: 1.05,
+                          backgroundColor: "rgba(16, 185, 129, 0.7)"
+                        }}
+                        transition={{ type: "spring", stiffness: 300 }}
                       >
                         {category}
                       </motion.span>
@@ -189,21 +231,23 @@ const ProjectsGallery = () => {
                 </div>
                 <div className="p-6">
                   <motion.h3 
-                    className="text-xl font-bold text-white mb-2"
-                    whileHover={{ color: "#10b981" }}
+                    className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors duration-300"
+                    whileHover={{ x: 5 }}
                   >
                     {project.title}
                   </motion.h3>
-                  <p className="text-gray-400 text-sm line-clamp-2">{project.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  <p className="text-gray-400 text-sm line-clamp-2 mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
                     {project.tools?.slice(0, 3).map((tool, idx) => (
                       <motion.span 
                         key={idx} 
                         className="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded"
                         whileHover={{ 
                           backgroundColor: "#10b981",
-                          color: "#ffffff"
+                          color: "#ffffff",
+                          scale: 1.05
                         }}
+                        transition={{ type: "spring", stiffness: 300 }}
                       >
                         {tool}
                       </motion.span>
@@ -212,7 +256,7 @@ const ProjectsGallery = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </AnimatePresence>
       </div>
 

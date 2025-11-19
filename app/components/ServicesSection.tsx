@@ -54,27 +54,31 @@ const ServicesSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ 
-                y: -10,
-                scale: 1.03,
+                y: -15,
+                scale: 1.05,
                 transition: { duration: 0.3 }
               }}
-              className="bg-card-bg rounded-xl p-6 shadow-xl border border-card-border hover:border-primary transition-all duration-300"
+              className="bg-card-bg rounded-xl p-6 shadow-xl border border-card-border hover:border-primary transition-all duration-300 group"
             >
               <motion.div 
-                className="text-4xl mb-4"
-                whileHover={{ scale: 1.2, rotate: 10 }}
+                className="text-4xl mb-4 flex justify-center"
+                whileHover={{ 
+                  scale: 1.3, 
+                  rotate: [0, 10, -10, 0],
+                  transition: { duration: 0.5 }
+                }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 {service.icon}
               </motion.div>
               <motion.h3 
-                className="text-xl font-bold text-white mb-2"
-                whileHover={{ color: "#10b981" }}
+                className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors duration-300"
+                whileHover={{ x: 5 }}
               >
                 {service.title}
               </motion.h3>
               <motion.p 
-                className="text-gray-400"
+                className="text-gray-400 mb-4"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -82,6 +86,24 @@ const ServicesSection = () => {
               >
                 {service.description}
               </motion.p>
+              <motion.div
+                className="mt-4"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <motion.button
+                  className="text-primary hover:text-primary-dark font-medium flex items-center group"
+                  whileHover={{ x: 5 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Learn more
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </motion.button>
+              </motion.div>
             </motion.div>
           ))}
         </div>

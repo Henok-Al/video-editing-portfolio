@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Project } from '../types/project';
+import { Project } from '../types/database';
 import BeforeAfterSlider from './BeforeAfterSlider';
 
 type ProjectModalProps = {
@@ -82,21 +82,21 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                   
                   <div className="flex flex-wrap gap-2 mb-4">
                     <span className="bg-emerald-600 text-white text-sm px-3 py-1 rounded-full">
-                      {project.format}
+                      {project.format || 'N/A'}
                     </span>
-                    {project.categories.map((category, idx) => (
+                    {project.categories?.map((category, idx) => (
                       <span key={idx} className="bg-gray-700 text-gray-300 text-sm px-3 py-1 rounded-full">
                         {category}
                       </span>
                     ))}
                   </div>
                   
-                  <p className="text-gray-300 mb-6">{project.description}</p>
+                  <p className="text-gray-300 mb-6">{project.description || 'No description available.'}</p>
                   
                   <div className="mb-6">
                     <h3 className="text-lg font-semibold text-white mb-2">Tools Used</h3>
                     <div className="flex flex-wrap gap-2">
-                      {project.tools.map((tool, idx) => (
+                      {project.tools?.map((tool, idx) => (
                         <span key={idx} className="bg-gray-800 text-gray-400 text-sm px-3 py-1 rounded">
                           {tool}
                         </span>
@@ -113,19 +113,12 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                       >
                         Video
                       </button>
-                      {project.before_image && project.after_image && (
-                        <button
-                          className={`py-2 px-4 font-medium text-sm ${activeTab === 'color' ? 'text-emerald-400 border-b-2 border-emerald-400' : 'text-gray-400'}`}
-                          onClick={() => setActiveTab('color')}
-                        >
-                          Color Grading
-                        </button>
-                      )}
+                      {/* Remove the color grading tab since we don't have before/after images in the database */}
                     </div>
                   </div>
                   
                   {/* Content based on active tab */}
-                  {activeTab === 'video' ? (
+                  {activeTab === 'video' && (
                     <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden">
                       {!showIframe ? (
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
@@ -167,14 +160,6 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                         </button>
                       )}
                     </div>
-                  ) : (
-                    project.before_image && project.after_image && (
-                      <BeforeAfterSlider 
-                        beforeImage={project.before_image} 
-                        afterImage={project.after_image} 
-                        alt={project.title} 
-                      />
-                    )
                   )}
                 </div>
                 
@@ -184,12 +169,12 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                     <div className="space-y-4">
                       <div>
                         <h4 className="text-gray-400 text-sm uppercase tracking-wide">Format</h4>
-                        <p className="text-white">{project.format}</p>
+                        <p className="text-white">{project.format || 'N/A'}</p>
                       </div>
                       <div>
                         <h4 className="text-gray-400 text-sm uppercase tracking-wide">Categories</h4>
                         <div className="flex flex-wrap gap-2 mt-1">
-                          {project.categories.map((category, idx) => (
+                          {project.categories?.map((category, idx) => (
                             <span key={idx} className="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">
                               {category}
                             </span>
@@ -199,7 +184,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                       <div>
                         <h4 className="text-gray-400 text-sm uppercase tracking-wide">Tools</h4>
                         <div className="flex flex-wrap gap-2 mt-1">
-                          {project.tools.map((tool, idx) => (
+                          {project.tools?.map((tool, idx) => (
                             <span key={idx} className="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">
                               {tool}
                             </span>

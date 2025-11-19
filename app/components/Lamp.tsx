@@ -39,6 +39,7 @@ const Lamp = () => {
                 className="absolute inset-0 flex items-center justify-center"
                 animate={{
                   scale: [1, 1.05, 1],
+                  opacity: [0.7, 1, 0.7]
                 }}
                 transition={{
                   duration: 4,
@@ -46,7 +47,7 @@ const Lamp = () => {
                   ease: "easeInOut"
                 }}
               >
-                <div className="h-96 w-96 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.1)_0%,rgba(0,0,0,0)_70%)]"></div>
+                <div className="h-96 w-96 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.15)_0%,rgba(0,0,0,0)_70%)]"></div>
               </motion.div>
               
               {/* Horizontal beam with sweeping animation */}
@@ -54,7 +55,7 @@ const Lamp = () => {
                 <motion.div
                   className="h-[1px] w-full bg-[linear-gradient(90deg,transparent,#10b98144,transparent)]"
                   animate={{
-                    x: [-100, 100, -100],
+                    x: [-200, 200, -200],
                   }}
                   transition={{
                     duration: 3,
@@ -70,6 +71,7 @@ const Lamp = () => {
                   className="h-full w-[1px] bg-[linear-gradient(180deg,transparent,#10b98144,transparent)]"
                   animate={{
                     opacity: [0.3, 1, 0.3],
+                    scaleY: [1, 1.2, 1]
                   }}
                   transition={{
                     duration: 2,
@@ -84,7 +86,7 @@ const Lamp = () => {
             <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05)_0%,transparent_70%)]"></div>
             
             {/* Animated particles with enhanced movement */}
-            {[...Array(8)].map((_, i) => (
+            {[...Array(12)].map((_, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 0, x: 0 }}
@@ -101,7 +103,7 @@ const Lamp = () => {
                 }}
                 className="absolute h-1 w-1 rounded-full bg-primary"
                 style={{
-                  left: `${10 + i * 10}%`,
+                  left: `${10 + i * 8}%`,
                   top: `${20 + (i % 3) * 20}%`
                 }}
               />
@@ -143,14 +145,20 @@ const Lamp = () => {
           className="mt-10 flex flex-col sm:flex-row gap-4"
         >
           <motion.button 
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 0 20px rgba(16, 185, 129, 0.5)"
+            }}
             whileTap={{ scale: 0.95 }}
             className="rounded-full bg-primary px-8 py-4 font-medium text-white transition-all hover:bg-primary-dark text-lg shadow-lg shadow-primary/20"
           >
             View My Work
           </motion.button>
           <motion.button 
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 0 20px rgba(6, 182, 212, 0.5)"
+            }}
             whileTap={{ scale: 0.95 }}
             className="rounded-full bg-transparent border-2 border-primary px-8 py-4 font-medium text-primary transition-all hover:bg-primary/10 text-lg"
           >

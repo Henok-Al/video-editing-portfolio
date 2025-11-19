@@ -1,58 +1,49 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import Navbar from "./components/Navbar";
 import Lamp from "./components/Lamp";
 import ProjectsGallery from "./components/ProjectsGallery";
 import AboutSection from "./components/AboutSection";
 import ServicesSection from "./components/ServicesSection";
 import Footer from "./components/Footer";
+import Section from "./components/Section";
+import ContactSection from "./components/ContactSection";
 
 export default function Home() {
-  const aboutRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: "0px 0px -50px 0px"
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("appear");
-        }
-      });
-    }, observerOptions);
-
-    // Observe all elements with animation classes
-    const elements = document.querySelectorAll(".fade-in, .slide-in-left, .slide-in-right");
-    elements.forEach(el => observer.observe(el));
-
-    // Cleanup observer on unmount
-    return () => {
-      elements.forEach(el => observer.unobserve(el));
-    };
-  }, []);
-
   return (
-    <div className="min-h-screen w-full bg-background text-foreground">
-      <Lamp />
-      
-      <div ref={aboutRef} className="fade-in">
-        <AboutSection />
+    <div className="min-h-screen w-full bg-background text-foreground overflow-x-hidden">
+      <Navbar />
+
+      <div id="home">
+        <Lamp />
       </div>
-      
-      <div ref={servicesRef} className="slide-in-left mt-8 md:mt-16">
-        <ServicesSection />
+
+      <div id="about">
+        <Section direction="up" className="relative z-10">
+          <AboutSection />
+        </Section>
       </div>
-      
-      <div ref={projectsRef} className="slide-in-right mt-8 md:mt-16">
-        <ProjectsGallery />
+
+      <div id="services">
+        <Section direction="left" className="mt-8 md:mt-16 relative z-10">
+          <ServicesSection />
+        </Section>
       </div>
-      
-      <div className="mt-8 md:mt-16">
+
+      <div id="projects">
+        <Section direction="right" className="mt-8 md:mt-16 relative z-10">
+          <ProjectsGallery />
+        </Section>
+      </div>
+
+      <div id="contact">
+        <Section direction="up" className="mt-8 md:mt-16 relative z-10">
+          <ContactSection />
+        </Section>
+      </div>
+
+      <div className="relative z-10">
         <Footer />
       </div>
     </div>

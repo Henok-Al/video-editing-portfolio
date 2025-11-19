@@ -192,3 +192,23 @@ export async function toggleProjectVisibility(id: string, visibility: 'draft' | 
   
   return { success: true, data }
 }
+/**
+ * Get published projects
+ * @returns List of published projects
+ */
+export async function getProjects() {
+  const supabase = getServiceClient()
+  
+  const { data, error } = await supabase
+    .from('projects')
+    .select('*')
+    .eq('visibility', 'published')
+    .order('sort_index', { ascending: true })
+    
+  if (error) {
+    console.error('Error fetching projects:', error)
+    return []
+  }
+  
+  return data
+}

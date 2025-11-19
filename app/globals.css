@@ -57,55 +57,6 @@ html, body {
   background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
 }
 
-/* Scroll animation utilities */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-in.appear {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.slide-in-left {
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.slide-in-left.appear {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.slide-in-right {
-  opacity: 0;
-  transform: translateX(30px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.slide-in-right.appear {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* Responsive utilities */
-@media (max-width: 768px) {
-  .responsive-grid {
-    grid-template-columns: 1fr !important;
-  }
-  
-  .responsive-flex {
-    flex-direction: column !important;
-  }
-  
-  .text-responsive {
-    font-size: 1.5rem !important;
-  }
-}
-
 /* Animation keyframes */
 @keyframes float {
   0% {

@@ -9,7 +9,6 @@ const Lamp = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      // Hide lamp effect when scrolled down 100px
       setIsVisible(scrollPosition < 100);
     };
 
@@ -17,183 +16,115 @@ const Lamp = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const letterVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  const title = "Henok Alemu";
+  const subtitle = "Video Editor";
+
   return (
-    <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-background">
-      {/* Core gradient background with enhanced animations */}
-      <AnimatePresence>
-        {isVisible && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            className="relative h-full w-full"
-          >
-            {/* Main gradient container */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              {/* Radial gradients for lamp effect */}
-              <div className="absolute inset-0 bg-[conic-gradient(from_90deg_at_50%_50%,#00000000_0%,#00000000_20%,#10b98122_25%,#00000000_30%,#00000000_100%)]"></div>
-              
-              {/* Center glow with pulsing animation */}
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center"
-                animate={{
-                  scale: [1, 1.05, 1],
-                  opacity: [0.7, 1, 0.7]
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                <div className="h-96 w-96 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.15)_0%,rgba(0,0,0,0)_70%)]"></div>
-              </motion.div>
-              
-              {/* Horizontal beam with sweeping animation */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  className="h-[1px] w-full bg-[linear-gradient(90deg,transparent,#10b98144,transparent)]"
-                  animate={{
-                    x: [-200, 200, -200],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </div>
-              
-              {/* Vertical beam with pulsing animation */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  className="h-full w-[1px] bg-[linear-gradient(180deg,transparent,#10b98144,transparent)]"
-                  animate={{
-                    opacity: [0.3, 1, 0.3],
-                    scaleY: [1, 1.2, 1]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </div>
-            </div>
-            
-            {/* Decorative elements */}
-            <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05)_0%,transparent_70%)]"></div>
-            
-            {/* Animated particles with enhanced movement */}
-            {[...Array(12)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 0, x: 0 }}
-                animate={{ 
-                  opacity: [0, 1, 0],
-                  y: [-100, (i * 50) - 150],
-                  x: [0, (i * 20) - 50],
-                }}
-                transition={{
-                  duration: 4 + i,
-                  repeat: Infinity,
-                  delay: i * 0.3,
-                  ease: "easeInOut"
-                }}
-                className="absolute h-1 w-1 rounded-full bg-primary"
-                style={{
-                  left: `${10 + i * 8}%`,
-                  top: `${20 + (i % 3) * 20}%`
-                }}
-              />
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-      
-      {/* Content area - Perfectly centered with enhanced animations */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full w-full text-center px-4 max-w-4xl mx-auto">
+    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background pt-20 pb-32">
+      {/* Subtle, cinematic background */}
+      <div className="absolute inset-0 w-full h-full">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.08)_0%,transparent_50%)]" />
+        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_80%_80%,rgba(6,182,212,0.05)_0%,transparent_40%)]" />
+      </div>
+
+      {/* Content area */}
+      <div className="relative z-10 flex flex-col items-center justify-center w-full text-center px-4 max-w-5xl mx-auto mt-10">
+
+        {/* Main Title Staggered Reveal */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
+          className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tighter text-white mb-4"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            visible: { transition: { staggerChildren: 0.05 } }
+          }}
         >
-          <span className="block">Creative Video</span>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1 }}
-            className="block mt-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
-          >
-            Editing Portfolio
-          </motion.span>
+          {title.split("").map((char, index) => (
+            <motion.span
+              key={index}
+              variants={letterVariants}
+              transition={{ duration: 0.8, ease: [0.6, 0.01, 0.05, 0.9] }}
+              className="inline-block"
+            >
+              {char === " " ? "\u00A0" : char}
+            </motion.span>
+          ))}
         </motion.h1>
+
+        {/* Subtitle with gradient and slow reveal */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.8, ease: "easeOut" }}
+          className="relative"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary uppercase">
+            {subtitle}
+          </h2>
+          <motion.div
+            className="absolute -bottom-2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.5, delay: 1.2, ease: "easeInOut" }}
+          />
+        </motion.div>
+
+        {/* Minimalist Description */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.7 }}
-          className="mt-6 text-lg text-gray-300 sm:text-xl md:text-2xl max-w-2xl"
+          transition={{ duration: 1, delay: 1.5 }}
+          className="mt-12 text-lg text-gray-400 max-w-xl font-light leading-relaxed"
         >
-          Crafting compelling visual stories through precision editing and creative storytelling techniques
+          Crafting visual narratives that resonate.
+          <br />
+          Precision editing. Creative storytelling.
         </motion.p>
+
+        {/* Minimalist Actions */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.9 }}
-          className="mt-10 flex flex-col sm:flex-row gap-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 2 }}
+          className="mt-16 flex flex-col sm:flex-row gap-8 items-center"
         >
-          <motion.button 
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 0 20px rgba(16, 185, 129, 0.5)"
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="rounded-full bg-primary px-8 py-4 font-medium text-white transition-all hover:bg-primary-dark text-lg shadow-lg shadow-primary/20"
+          <button
+            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            className="group relative px-6 py-3 text-white font-medium text-sm tracking-widest uppercase overflow-hidden"
           >
-            View My Work
-          </motion.button>
-          <motion.button 
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 0 20px rgba(6, 182, 212, 0.5)"
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="rounded-full bg-transparent border-2 border-primary px-8 py-4 font-medium text-primary transition-all hover:bg-primary/10 text-lg"
+            <span className="relative z-10 group-hover:text-black transition-colors duration-500">View Work</span>
+            <span className="absolute inset-0 border border-white/20 group-hover:border-transparent transition-colors duration-500" />
+            <span className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+          </button>
+
+          <button
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="text-gray-400 hover:text-white text-sm tracking-widest uppercase transition-colors duration-300 flex items-center gap-2"
           >
             Contact Me
-          </motion.button>
+            <motion.span
+              animate={{ x: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </button>
         </motion.div>
       </div>
-      
-      {/* Enhanced Scroll indicator */}
+
+      {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
+        transition={{ delay: 2.5, duration: 1 }}
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
       >
-        <div className="flex flex-col items-center">
-          <motion.span 
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="text-sm text-gray-400 mb-2"
-          >
-            Scroll to explore
-          </motion.span>
-          <div className="w-8 h-12 rounded-full border-2 border-primary flex justify-center p-1">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ 
-                duration: 1.5, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }}
-              className="w-2 h-2 rounded-full bg-primary"
-            />
-          </div>
-        </div>
+        <div className="w-[1px] h-24 bg-gradient-to-b from-transparent via-gray-500 to-transparent opacity-30" />
       </motion.div>
     </div>
   );
